@@ -22,6 +22,15 @@ def parse_speaker_segments(script):
             segments.append((speaker, text.strip()))
     return segments
 
+def extractlabels(script):
+   
+    for line in script.splitlines():
+        if line.strip().lower().startswith("labels:"):
+            labels_line = line.strip()[len("labels:"):].strip()
+            labels = [label.strip() for label in labels_line.split(",") if label.strip()]
+            return labels
+    return []
+
 def main(pdf_path):
     if not os.path.exists(pdf_path):
         print(f"Error: The file {pdf_path} does not exist.")
@@ -45,6 +54,10 @@ def main(pdf_path):
 
     gemini_output_clean = clean_gemini_output(gemini_output)
 
+    # Extract labels 
+    labels = extractlabels(gemini_output_clean)
+    print(f"Extracted labels: {labels}")
+
     # --- Two-speaker audio synthesis ---
     # Define voice IDs for each speaker
     voice_map = {
@@ -58,7 +71,6 @@ def main(pdf_path):
         voice_id = voice_map.get(speaker, voice_map["S1"])
         audio_bytes = generate_audio_elevenlabs(text, voice_id=voice_id)
         if audio_bytes:
-            # If audio_bytes is a generator, convert to bytes
             if hasattr(audio_bytes, '__iter__') and not isinstance(audio_bytes, (bytes, bytearray)):
                 audio_bytes = b"".join(audio_bytes)
             audio_segment = AudioSegment.from_file(io.BytesIO(audio_bytes), format="mp3")
@@ -79,6 +91,8 @@ def main(pdf_path):
     output_filename = "final_output.mp3"
     final_audio.export(output_filename, format="mp3")
     print("Output saved successfully.")
+
+    return labels  
 
 if __name__ == "__main__":
     pdf_file_path = "SR.pdf" # THIS WILL HAVE USER UPLOADED PDF

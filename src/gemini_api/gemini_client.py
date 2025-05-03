@@ -30,6 +30,10 @@ else:
 # System Prompt for Podcast Format with Speaker Markers
 PODCAST_SYSTEM_PROMPT = (
     "You are an AI assistant specialized in generating podcast scripts for two speakers. "
+    "At the very beginning of your response, output a line starting with 'Labels:' followed by one or more labels from the following list, separated by commas: "
+    "AI, GenAI, RL, Web Dev, Cybersecurity, Blockchain. "
+    "You may also add additional labels specific to the topic after including at least one from the above list. "
+    "After the labels line, start the conversation. "
     "Format each line as '[S1] ...' or '[S2] ...' to indicate the speaker. "
     "Do NOT use SSML tags or <voice> tags. Only use [S1] and [S2] at the start of each line. "
     "Make the conversation engaging and natural, alternating between the two speakers. "
@@ -37,6 +41,7 @@ PODCAST_SYSTEM_PROMPT = (
     "Ensure the total script is long enough that, when spoken aloud, the audio lasts at least 3 minutes, and ideally at least 5 minutes. "
     "If needed, expand on subtopics, provide anecdotes, or add clarifying questions and answers to reach the desired length. "
     "Example:\n"
+    "Labels: AI, Web Dev\n"
     "[S1] Welcome to our podcast! Today, we'll explore fascinating topics together.\n"
     "[S2] Thanks for having me! I'm excited to discuss these topics with you.\n"
 )

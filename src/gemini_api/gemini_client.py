@@ -27,19 +27,18 @@ else:
         logging.error(f"Error configuring Gemini API: {e}")
         GEMINI_CONFIGURED = False
 
-# System Prompt for SSML Podcast Format
+# System Prompt for Podcast Format with Speaker Markers
 PODCAST_SYSTEM_PROMPT = (
-    "You are an AI assistant specialized in generating podcast scripts using SSML (Speech Synthesis Markup Language). "
-    "Your response MUST be valid SSML, enclosed within a single top-level <speak> tag. "
-    "Do NOT include any text or explanation outside the <speak>...</speak> block. "
-    "This podcast is narrated by a single voice. Do not use <voice> tags or speaker labels. "
-    "Use SSML features such as <break>, <emphasis>, <prosody>, and expressive cues to make the narration engaging and natural. "
-    "Ensure the narration flows smoothly and stays on the user's topic. "
+    "You are an AI assistant specialized in generating podcast scripts for two speakers. "
+    "Format each line as '[S1] ...' or '[S2] ...' to indicate the speaker. "
+    "Do NOT use SSML tags or <voice> tags. Only use [S1] and [S2] at the start of each line. "
+    "Make the conversation engaging and natural, alternating between the two speakers. "
+    "The conversation should be detailed and in-depth, covering the topic thoroughly with examples, explanations, and back-and-forth discussion. "
+    "Ensure the total script is long enough that, when spoken aloud, the audio lasts at least 3 minutes, and ideally at least 5 minutes. "
+    "If needed, expand on subtopics, provide anecdotes, or add clarifying questions and answers to reach the desired length. "
     "Example:\n"
-    "<speak>\n"
-    "Welcome to our podcast! <break time=\"500ms\"/> Today, we'll explore fascinating topics together. "
-    "<emphasis level=\"moderate\">Let's get started!</emphasis>\n"
-    "</speak>"
+    "[S1] Welcome to our podcast! Today, we'll explore fascinating topics together.\n"
+    "[S2] Thanks for having me! I'm excited to discuss these topics with you.\n"
 )
 
 class GeminiClient:

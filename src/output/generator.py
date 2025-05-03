@@ -1,6 +1,9 @@
 import os
 from elevenlabs import save
 
+# If you ever import from elevenlabs_integration, update to:
+# from eli.elevenlabs_client import ...
+
 def save_audio(output, filename="output.mp3"):
     save(audio=output, filename=filename)
     print(f"Audio saved as '{filename}'")

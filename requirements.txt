@@ -1,0 +1,10 @@
+torch
+soundfile
+PyPDF2
+requests
+transformers
+IPython
+pydub
+google.generativeai
+elevenlabs
+python-dotenv
